@@ -60,13 +60,16 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
 }
 
 fn run_info(terminal: &mut DefaultTerminal) -> Result<()> {
-    terminal.draw(|frame: &mut Frame| {
+   
+
+    loop {
+
+         terminal.draw(|frame: &mut Frame| {
         let text = Text::raw("SXsv Build Info\nVersion: 0.1.0\nAuthor: Unknown");
         let paragraph = Paragraph::new(text);
         frame.render_widget(paragraph, frame.area());
     })?;
 
-    loop {
         if let Event::Key(key) = event::read()? {
             if key.code == KeyCode::Esc || key.code == KeyCode::Char('q') {
                 break;
