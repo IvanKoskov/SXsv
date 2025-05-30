@@ -1,7 +1,7 @@
 use homedir::my_home;
 use std::env::consts::OS;
-use std::path::{Path, PathBuf};
-use std::fs::File;
+use std::path::{self, Path, PathBuf};
+use std::fs::{self, File};
 use std::io::prelude::*;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -62,5 +62,33 @@ else if log_present == true {
 let get_os = unsafe { &raw const OSGLOBAL };
 
 unsafe { *get_os }
+}
+
+
+
+pub fn create_sxsv_files_folder_os(os: OS) -> bool {
+
+  let home = my_home()
+    .ok()
+    .flatten()
+    .map(|p| p.display().to_string())
+    .unwrap_or_else(|| "Unknown".to_string());
+println!("{}", home);
+
+let mut path_to_folder = home + "/.sxsv";
+
+if os == OS::MACOS || os == OS::LINUX {
+
+let mut folder = fs::create_dir(&path_to_folder);
+let log_present: bool = Path::new(&path_to_folder).exists();
+
+} 
+else if os == OS::WINDOWS {
+
+return false;
+
+}
+
+true
 }
 
