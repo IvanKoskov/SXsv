@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script only works for unix systems and OSX
+
 echo "Running"
 
 
