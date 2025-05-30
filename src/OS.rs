@@ -92,3 +92,11 @@ return false;
 true
 }
 
+pub fn sxsv_setup() {
+    let value_os = log_os();
+    let value_debug_sxsv: bool = create_sxsv_files_folder_os(value_os);
+
+    println!("{:?}", value_os);
+    println!("{:?}", value_debug_sxsv);
+}
+

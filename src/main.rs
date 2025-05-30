@@ -10,20 +10,14 @@ use crossterm::event::Event;
 use entry::parse_args_run;
 use ratatui::{crossterm::terminal, DefaultTerminal, Frame};
 use homedir::my_home;
-use OS::{create_sxsv_files_folder_os, log_os};
+use OS::{create_sxsv_files_folder_os, log_os, sxsv_setup};
 use std::path::PathBuf;
 
 
 fn main() -> Result<()> { 
-
-    let value_os = log_os();
-    let value_debug_sxsv: bool = create_sxsv_files_folder_os(value_os);
-
-    println!("{:?}", value_os);
-    println!("{:?}", value_debug_sxsv);
+  
+    sxsv_setup();
     
-    //println!("Current OS: {}", std::env::consts::OS);
-
     color_eyre::install()?;
     let terminal = ratatui::init();
     
