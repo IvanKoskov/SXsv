@@ -9,8 +9,19 @@ use color_eyre::Result;
 use crossterm::event::Event;
 use entry::parse_args_run;
 use ratatui::{crossterm::terminal, DefaultTerminal, Frame};
+use homedir::my_home;
+use OS::log_os;
+use std::path::PathBuf;
+
 
 fn main() -> Result<()> { 
+
+    let value_os = log_os();
+
+    println!("{:?}", value_os);
+    
+    //println!("Current OS: {}", std::env::consts::OS);
+
     color_eyre::install()?;
     let terminal = ratatui::init();
     
