@@ -81,7 +81,7 @@ if os == OS::MACOS || os == OS::LINUX {
 
 let mut folder = fs::create_dir(&path_to_folder);
 let log_present: bool = Path::new(&path_to_folder).exists();
-
+return true;
 } 
 else if os == OS::WINDOWS {
 
