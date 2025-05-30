@@ -17,7 +17,7 @@ use std::path::PathBuf;
 fn main() -> Result<()> { 
   
     sxsv_setup();
-    
+
     color_eyre::install()?;
     let terminal = ratatui::init();
     

@@ -26,7 +26,7 @@ pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
         }
         Message::ERROR(value) => {
             println!("{}", value);
-            println!("\n{}", USAGE);
+            println!("{}", USAGE);
         }
         Message::VOID => unreachable!("VOID case should not occur"),
     }
@@ -35,28 +35,26 @@ pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
 }
 
 pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result<()> {
-    match args[1].as_str() {
-        "info" => run_info(terminal),
-        "help" => {
-            println!("{}", USAGE);
-            Ok(())
-        }
-        "browse" => run_browse(terminal),
-        "new" => {
-            if args.len() < 3 {
-                println!("Error: File name required for 'new' command");
-                println!("\n{}", USAGE);
-                Ok(())
-            } else {
-                run_new(&args[2], terminal)
-            }
-        }
-        _ => {
-            println!("Error: Unknown command '{}'", args[1]);
-            println!("\n{}", USAGE);
-            Ok(())
-        }
+    if args[1].as_str() == "info" {
+    run_info(terminal)
+} else if args[1].as_str() == "help" {
+    println!("{}", USAGE);
+    Ok(())
+} else if args[1].as_str() == "browse" {
+    run_browse(terminal)
+} else if args[1].as_str() == "new" {
+    if args.len() < 3 {
+        println!("Error: File name required for 'new' command");
+        println!("\n{}", USAGE);
+        Ok(())
+    } else {
+        run_new(&args[2], terminal)
     }
+} else {
+    println!("Error: Unknown command '{}'", args[1]);
+    println!("\n{}", USAGE);
+    Ok(())
+}
 }
 
 fn run_info(terminal: &mut DefaultTerminal) -> Result<()> {
