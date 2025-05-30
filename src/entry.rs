@@ -13,11 +13,13 @@ const USAGE: &str = "SXsv usage:
 
 pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
     let args: Vec<String> = env::args().collect();
-    let mut result: Message = if args.len() < 2 {
-        Message::ERROR("Unrecognized command...".to_string())
+    println!("{:?}", args);
+    let mut result: Message;
+    if args.len() < 2 {
+      result = Message::ERROR("Unrecognized command...".to_string())
     } else {
-        Message::SUCCESS("loading...".to_string())
-    };
+      result = Message::SUCCESS("loading...".to_string())
+    }
 
     match result {
         Message::SUCCESS(value) => {
@@ -26,6 +28,7 @@ pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
         }
         Message::ERROR(value) => {
             println!("{}", value);
+            
             println!("{}", USAGE);
         }
         Message::VOID => unreachable!("VOID case should not occur"),
@@ -38,7 +41,7 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
     if args[1].as_str() == "info" {
     run_info(terminal)
 } else if args[1].as_str() == "help" {
-    println!("{}", USAGE);
+    println!("{:?}", USAGE);
     Ok(())
 } else if args[1].as_str() == "browse" {
     run_browse(terminal)
