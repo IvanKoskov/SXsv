@@ -14,8 +14,8 @@ const USAGE: &str = "SXsv usage:
 pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
     let args: Vec<String> = env::args().collect();
     println!("{:?}", args);
-    let mut result: Message;
-    if args.len() < 2 {
+    let result: Message;
+    if args.len() < 6 {
       result = Message::ERROR("Unrecognized command...".to_string())
     } else {
       result = Message::SUCCESS("loading...".to_string())
@@ -38,14 +38,14 @@ pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
 }
 
 pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result<()> {
-    if args[1].as_str() == "info" {
+    if args[1] == "info" {
     run_info(terminal)
-} else if args[1].as_str() == "help" {
+} else if args[1] == "help" {
     println!("{:?}", USAGE);
     Ok(())
-} else if args[1].as_str() == "browse" {
+} else if args[1] == "browse" {
     run_browse(terminal)
-} else if args[1].as_str() == "new" {
+} else if args[1] == "new" {
     if args.len() < 3 {
         println!("Error: File name required for 'new' command");
         println!("\n{}", USAGE);

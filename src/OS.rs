@@ -1,6 +1,5 @@
 use homedir::my_home;
-use std::env::consts::OS;
-use std::path::{self, Path, PathBuf};
+use std::path::Path;
 use std::fs::{self, File};
 use std::io::prelude::*;
 
@@ -16,7 +15,7 @@ pub enum OS {
 static mut OSGLOBAL: OS = OS::VOID;
 
 pub fn log_os() -> OS {
-    let mut get_os_string =  std::env::consts::OS;
+    let get_os_string =  std::env::consts::OS;
 
     if get_os_string == "macos" {
      
@@ -41,14 +40,14 @@ pub fn log_os() -> OS {
     .flatten()
     .map(|p| p.display().to_string())
     .unwrap_or_else(|| "Unknown".to_string());
-println!("{}", home);
+//println!("{}", home);
 
-let mut path_to_log = home + "/.log_sxsv";
-println!("{}", path_to_log);
+let path_to_log = home + "/.log_sxsv";
+//println!("{}", path_to_log);
 
 let log_present: bool = Path::new(&path_to_log).exists();
 
-println!("{:?}", log_present);
+//println!("{:?}", log_present);
 
 if log_present == false {
     if let Ok(mut file) = File::create(&path_to_log) {
@@ -73,13 +72,13 @@ pub fn create_sxsv_files_folder_os(os: OS) -> bool {
     .flatten()
     .map(|p| p.display().to_string())
     .unwrap_or_else(|| "Unknown".to_string());
-println!("{}", home);
+//println!("{}", home);
 
-let mut path_to_folder = home + "/.sxsv";
+let path_to_folder = home + "/.sxsv";
 
 if os == OS::MACOS || os == OS::LINUX {
 
-let mut folder = fs::create_dir(&path_to_folder);
+let folder = fs::create_dir(&path_to_folder);
 let log_present: bool = Path::new(&path_to_folder).exists();
 return true;
 } 
@@ -96,7 +95,7 @@ pub fn sxsv_setup() {
     let value_os = log_os();
     let value_debug_sxsv: bool = create_sxsv_files_folder_os(value_os);
 
-    println!("{:?}", value_os);
-    println!("{:?}", value_debug_sxsv);
+   // println!("{:?}", value_os);
+   //println!("{:?}", value_debug_sxsv);
 }
 
