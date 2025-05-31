@@ -1,7 +1,9 @@
-use std::env;
+use std::{env, fs::read_to_string};
+use chrono::Utc;
 use color_eyre::{eyre::Ok, Result};
 use crossterm::event::{self, Event, KeyCode};
-use ratatui::{style::{Style, Stylize}, text::{Line, Text}, widgets::{block, Block, BorderType, Borders, Paragraph, Wrap}, DefaultTerminal, Frame};
+use homedir::my_home;
+use ratatui::{layout::Alignment, style::{Style, Stylize}, text::{Line, Text}, widgets::{block, Block, BorderType, Borders, Padding, Paragraph, Wrap}, DefaultTerminal, Frame};
 
 use crate::file::File_sxsv;
 
@@ -9,6 +11,23 @@ use crate::file::File_sxsv;
 
 
 pub fn run_info(terminal: &mut DefaultTerminal) -> Result<()> {
+
+     let read_time_when_installed = | | -> String {
+
+           let home = my_home()
+    .ok()
+    .flatten()
+    .map(|p| p.display().to_string())
+    .unwrap_or_else(|| "Unknown".to_string());
+//println!("{}", home);
+
+       let path_to_time = home + "/.time_sxsv";
+      
+      let contents = read_to_string(path_to_time)
+          .unwrap_or_else(|_| "Unknown".to_string());
+    
+      contents
+      };
 
 
     loop {
@@ -18,10 +37,20 @@ pub fn run_info(terminal: &mut DefaultTerminal) -> Result<()> {
     .title(Line::from("SXSV - fast and neat data formats viewer and editor").centered().bold())
     .borders(Borders::ALL)
     .border_type(BorderType::Rounded);
-      
-    let body  = vec![Line::from("Platform: "), Line::from("Time installed:")];
-    let par = Paragraph::new(body).block(b.clone())
-                .wrap(Wrap { trim: true });
+
+    
+
+    let body  = vec![Line::from(format!("Platform: {}", std::env::consts::OS)), Line::from(format!("Installed current version on: {:?}", read_time_when_installed()))
+    , Line::from("Main developer and  maintainer: Ivan Koskov"), Line::from("License:  BSD-3-Clause license")];
+let par = Paragraph::new(body).block(b.clone().padding(Padding::new(
+0, // left
+0, // right
+ 2, // top
+0, // bottom
+)))
+            .wrap(Wrap { trim: true })
+            .alignment(Alignment::Center);
+            
 
 frame.render_widget(par, frame.area());
 
