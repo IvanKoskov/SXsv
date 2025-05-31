@@ -26,8 +26,8 @@ pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
 
     match result {
         Message::SUCCESS(value) => {
-            println!("{}", value);
-            parse_args_run(&args, &mut terminal)?;
+           // println!("{}", value);
+           // parse_args_run(&args, &mut terminal)?;
         }
         Message::ERROR(value) => {
             println!("{}", value);
@@ -59,8 +59,8 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
         run_new(&args[2], terminal)
     }
 } else {
-    println!("Error: Unknown command '{}'", args[1]);
-    println!("\n{}", USAGE);
+   // println!("Error: Unknown command '{}'", args[1]);
+    //println!("\n{}", USAGE);
     Ok(())
 }
 }

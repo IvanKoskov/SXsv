@@ -3,6 +3,10 @@ use color_eyre::{eyre::Ok, Result};
 use crossterm::event::{self, Event, KeyCode};
 use ratatui::{DefaultTerminal, Frame, text::Text, widgets::Paragraph};
 
+use crate::file::File_sxsv;
+
+
+
 pub fn run_info(terminal: &mut DefaultTerminal) -> Result<()> {
    
 
