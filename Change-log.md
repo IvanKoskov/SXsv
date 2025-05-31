@@ -4,3 +4,4 @@
 - initial support is for MacOS, Linux
 - Windows support is delayed
 - MacOS, Linux application setup
+- Added build versions system with a (mm-dd-yyyy) format

@@ -16,7 +16,7 @@ pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
    
 
     let args: Vec<String> = env::args().collect();
-    println!("{:?}", args);
+   // println!("{:?}", args);
     let result: Message;
     if args.len() <= 1 {
       result = Message::ERROR("Unrecognized command...".to_string())
@@ -26,13 +26,15 @@ pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
 
     match result {
         Message::SUCCESS(value) => {
-           // println!("{}", value);
-           // parse_args_run(&args, &mut terminal)?;
+            //println!("{}", value);
+            parse_args_run(&args, &mut terminal)?;
+
+           // println!("");
         }
         Message::ERROR(value) => {
-            println!("{}", value);
+           // println!("{}", value);
             
-            println!("{}", USAGE);
+           // println!("{}", USAGE);
         }
         Message::VOID => unreachable!("VOID case should not occur"),
     }
@@ -59,8 +61,8 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
         run_new(&args[2], terminal)
     }
 } else {
-   // println!("Error: Unknown command '{}'", args[1]);
-    //println!("\n{}", USAGE);
+    println!("Error: Unknown command '{}'", args[1]);
+    println!("\n{}", USAGE);
     Ok(())
 }
 }
