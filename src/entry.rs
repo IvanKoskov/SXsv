@@ -3,7 +3,7 @@ use color_eyre::{eyre::Ok, Result};
 use crossterm::event::{self, Event, KeyCode};
 use ratatui::{DefaultTerminal, Frame, text::Text, widgets::Paragraph};
 
-use crate::messages::Message;
+use crate::{info_menu::{run_browse, run_info, run_new}, messages::Message};
 
 const USAGE: &str = "SXsv usage:
   SXsv browse - global file manager
@@ -12,10 +12,13 @@ const USAGE: &str = "SXsv usage:
   SXsv help - show this message";
 
 pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
+
+   
+
     let args: Vec<String> = env::args().collect();
     println!("{:?}", args);
     let result: Message;
-    if args.len() < 6 {
+    if args.len() <= 1 {
       result = Message::ERROR("Unrecognized command...".to_string())
     } else {
       result = Message::SUCCESS("loading...".to_string())
@@ -38,6 +41,8 @@ pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
 }
 
 pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result<()> {
+
+
     if args[1] == "info" {
     run_info(terminal)
 } else if args[1] == "help" {
@@ -60,35 +65,4 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
 }
 }
 
-fn run_info(terminal: &mut DefaultTerminal) -> Result<()> {
-   
 
-    loop {
-
-         terminal.draw(|frame: &mut Frame| {
-        let text = Text::raw("SXsv Build Info\nVersion: 0.1.0\nAuthor: Unknown");
-        let paragraph = Paragraph::new(text);
-        frame.render_widget(paragraph, frame.area());
-    })?;
-
-        if let Event::Key(key) = event::read()? {
-            if key.code == KeyCode::Esc || key.code == KeyCode::Char('q') {
-                break;
-            }
-        }
-    }
-
-    Ok(())
-}
-
-fn run_browse(_terminal: &mut DefaultTerminal) -> Result<()> {
-    // Placeholder for file manager logic
-    println!("Browse mode not implemented yet");
-    Ok(())
-}
-
-fn run_new(_filename: &str, _terminal: &mut DefaultTerminal) -> Result<()> {
-    // Placeholder for file creation logic
-    println!("File creation not implemented yet");
-    Ok(())
-}
