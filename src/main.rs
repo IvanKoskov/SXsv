@@ -1,14 +1,18 @@
 mod entry;
 mod file;
 mod OS;
+mod time;
 mod messages;
 mod info_menu;
 use crate::entry::arguments_sxsv;
 use color_eyre::{eyre::Ok, Result};
+use time::{sxsv_time};
 use OS::sxsv_setup;
 
 
 fn main() -> Result<()> { 
+
+sxsv_time();
     
 sxsv_setup();
 
