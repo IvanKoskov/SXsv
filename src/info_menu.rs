@@ -41,7 +41,7 @@ pub fn run_info(terminal: &mut DefaultTerminal) -> Result<()> {
     
 
     let body  = vec![Line::from(format!("Platform: {}", std::env::consts::OS)), Line::from(format!("Installed current version on: {:?}", read_time_when_installed()))
-    , Line::from("Main developer and  maintainer: Ivan Koskov"), Line::from("License:  BSD-3-Clause license")];
+    , Line::from("Main developer and  maintainer: Ivan Koskov"), Line::from("License:  BSD-3-Clause license"), Line::from("Copyright (c) [2025], [Ivan Koskov aka Evan Matthew]")];
 let par = Paragraph::new(body).block(b.clone().padding(Padding::new(
 0, // left
 0, // right
