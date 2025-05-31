@@ -5,3 +5,5 @@
 - Windows support is delayed
 - MacOS, Linux application setup
 - Added build versions system with a (mm-dd-yyyy) format
+- Some progress working with Ratatui TUI widgets and blocks
+- Info menu is considered finished
