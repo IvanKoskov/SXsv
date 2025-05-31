@@ -3,7 +3,7 @@ use color_eyre::{eyre::Ok, Result};
 use crossterm::event::{self, Event, KeyCode};
 use ratatui::{DefaultTerminal, Frame, text::Text, widgets::Paragraph};
 
-use crate::{info_menu::{run_browse, run_info, run_new}, messages::Message};
+use crate::{info_menu::{run_browse, run_help, run_info, run_new}, messages::Message};
 
 const USAGE: &str = "SXsv usage:
   SXsv browse - global file manager
@@ -48,7 +48,8 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
     if args[1] == "info" {
     run_info(terminal)
 } else if args[1] == "help" {
-    println!("{:?}", USAGE);
+    //println!("{:?}", USAGE);
+    run_help(terminal);
     Ok(())
 } else if args[1] == "browse" {
     run_browse(terminal)

@@ -79,3 +79,22 @@ pub fn run_new(_filename: &str, _terminal: &mut DefaultTerminal) -> Result<()> {
     println!("File creation not implemented yet");
     Ok(())
 }
+
+pub fn run_help(terminal: &mut DefaultTerminal) -> Result<()> {
+
+
+loop {
+    terminal.draw(|frame: &mut Frame| {
+       frame.render_widget("hello world", frame.area());
+    })?;
+
+    if let Event::Key(key) = event::read()? {
+            if key.code == KeyCode::Esc || key.code == KeyCode::Char('q') {
+                break;
+             }
+             
+        }
+}
+
+Ok(())
+}
