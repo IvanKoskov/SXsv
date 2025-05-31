@@ -1,4 +1,4 @@
-#[derive(Debug)]
+//#[derive(Debug)]
 pub enum Message {
     SUCCESS(String),
     ERROR(String),

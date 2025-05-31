@@ -55,7 +55,7 @@ if log_present == false {
     }
 }
 else if log_present == true {
-    println!("...");
+   // println!("...");
 }
 
 let get_os = unsafe { &raw const OSGLOBAL };
