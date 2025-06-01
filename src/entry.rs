@@ -3,7 +3,7 @@ use color_eyre::{eyre::Ok, Result};
 use crossterm::event::{self, Event, KeyCode};
 use ratatui::{DefaultTerminal, Frame, text::Text, widgets::Paragraph};
 
-use crate::{info_menu::{run_browse, run_help, run_info, run_new}, messages::Message};
+use crate::{editor_csv::run_csv_editor, info_menu::{run_browse, run_help, run_info, run_new}, messages::Message};
 
 const USAGE: &str = "SXsv usage:
   SXsv browse - global file manager
@@ -59,7 +59,8 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
         println!("\n{}", USAGE);
         Ok(())
     } else {
-        run_new(&args[2], terminal)
+        run_csv_editor(terminal, args[2].clone());
+        Ok(())
     }
 } else {
       run_help(terminal);

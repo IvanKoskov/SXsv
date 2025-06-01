@@ -4,6 +4,7 @@ mod OS;
 mod time;
 mod messages;
 mod info_menu;
+mod editor_csv;
 use crate::entry::arguments_sxsv;
 use color_eyre::{eyre::Ok, Result};
 use time::{sxsv_time};
