@@ -45,3 +45,6 @@ if let Ok(Event::Key(key)) = event::read() {
 ### IMPORTANT!
 
 We want to use frame.render_stateful_widget(...) because we will have data to update and keep track of so use it (CSV text basically).
+
+https://docs.rs/ratatui/latest/ratatui/widgets/trait.StatefulWidget.html
+https://docs.rs/ratatui
