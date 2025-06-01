@@ -1,12 +1,12 @@
 ## Todos
 
-- Create CSV files editor (Edit contents, view of source, some small tools like search, sort)
+1. Create CSV files editor (Edit contents, view of source, some small tools like search, sort)
 
-- Create editors for other formats (Current goal is CSV editor)
+2. Create editors for other formats (Current goal is CSV editor)
 
 ## Steps for CSV editor
 
-- Use the the template below and draw stuff using it
+Use the the template below and draw stuff using it
 
 ```
 pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) {
