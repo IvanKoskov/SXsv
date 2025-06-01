@@ -7,3 +7,4 @@
 - Added build versions system with a (mm-dd-yyyy) format
 - Some progress working with Ratatui TUI widgets and blocks
 - Info menu is considered finished
+- Help menu is considered finished
