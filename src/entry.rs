@@ -12,7 +12,7 @@ const USAGE: &str = "SXsv usage:
   SXsv help - show this message";
 
 pub fn arguments_sxsv(mut terminal: DefaultTerminal) -> Result<()> {
-
+    
    
 
     let args: Vec<String> = env::args().collect();
