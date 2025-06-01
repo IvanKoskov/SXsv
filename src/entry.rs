@@ -62,8 +62,9 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
         run_new(&args[2], terminal)
     }
 } else {
-    println!("Error: Unknown command '{}'", args[1]);
-    println!("\n{}", USAGE);
+      run_help(terminal);
+   // println!("Error: Unknown command '{}'", args[1]);
+    //println!("\n{}", USAGE);
     Ok(())
 }
 }
