@@ -1,5 +1,3 @@
-.. filepath: /Users/evan/SXsv/docs/documentation.rst
-
 Conventions
 ===========
 
