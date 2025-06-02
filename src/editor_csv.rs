@@ -1,13 +1,13 @@
 use color_eyre::eyre;
 use crossterm::event::{self, Event, KeyCode};
+use eyre::Result;
 use ratatui::{
+    DefaultTerminal, Frame,
     layout::{Constraint, Direction, Layout, Rect},
     style::{Style, Stylize},
     text::Text,
     widgets::{Block, Borders, List, ListState, Paragraph},
-    DefaultTerminal, Frame,
 };
-use eyre::Result;
 
 pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Result<()> {
     let mut list_action_option = ListState::default();
@@ -15,13 +15,11 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
 
     loop {
         let _ = terminal.draw(|frame: &mut Frame| {
-            
             let layout = Layout::default()
                 .direction(Direction::Horizontal)
                 .constraints(vec![Constraint::Percentage(70), Constraint::Percentage(30)])
                 .split(frame.area());
 
-          
             let action_list = List::new([
                 Text::styled("Sort", Style::new().red()),
                 Text::styled("Search", Style::new().red()),
@@ -46,7 +44,7 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
             frame.render_stateful_widget(action_list, layout[1], &mut list_action_option);
 
             // Render the popover if active
-          /*   if popover {
+            /*   if popover {
                 // Create a centered popover area (e.g., 30% of terminal width and 5 lines tall)
                 let popover_area = centered_rect(30, 20, frame.area());
                 frame.render_widget(parpopover, popover_area);
@@ -66,8 +64,6 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
                 };
                 frame.render_widget(parpopover, popover_area);
             }
-
-
         })?;
 
         if let Event::Key(key) = event::read()? {
@@ -75,14 +71,26 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
                 KeyCode::Esc | KeyCode::Char('q') => break,
                 KeyCode::Down => {
                     let i = match list_action_option.selected() {
-                        Some(i) => if i >= 2 { 0 } else { i + 1 },
+                        Some(i) => {
+                            if i >= 2 {
+                                0
+                            } else {
+                                i + 1
+                            }
+                        }
                         None => 0,
                     };
                     list_action_option.select(Some(i));
                 }
                 KeyCode::Up => {
                     let i = match list_action_option.selected() {
-                        Some(i) => if i == 0 { 2 } else { i - 1 },
+                        Some(i) => {
+                            if i == 0 {
+                                2
+                            } else {
+                                i - 1
+                            }
+                        }
                         None => 0,
                     };
                     list_action_option.select(Some(i));
