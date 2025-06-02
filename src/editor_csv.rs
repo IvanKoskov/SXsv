@@ -55,7 +55,7 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
             if popover {
                 // Centered Rect for the popover
                 let popover_width = frame.area().width * 30 / 100; // 30% of terminal width
-                let popover_height = 5; // Fixed height of 5 lines
+                let popover_height = 10; // Fixed height of 5 lines
                 let popover_x = (frame.area().width - popover_width) / 2; // Center horizontally
                 let popover_y = (frame.area().height - popover_height) / 2; // Center vertically
                 let popover_area = Rect {
