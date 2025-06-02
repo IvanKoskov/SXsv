@@ -69,7 +69,7 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
         if let Event::Key(key) = event::read()? {
             match key.code {
                 KeyCode::Esc | KeyCode::Char('q') => break,
-                KeyCode::Down => {
+                KeyCode::Down | KeyCode::Char('l') => {
                     let i = match list_action_option.selected() {
                         Some(i) => {
                             if i >= 2 {
@@ -82,7 +82,7 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
                     };
                     list_action_option.select(Some(i));
                 }
-                KeyCode::Up => {
+                KeyCode::Up | KeyCode::Char('h') => {
                     let i = match list_action_option.selected() {
                         Some(i) => {
                             if i == 0 {
