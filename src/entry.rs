@@ -56,7 +56,8 @@ pub fn parse_args_run(args: &[String], terminal: &mut DefaultTerminal) -> Result
 } else if args[1] == "new" {
     if args.len() < 3 {
         println!("Error: File name required for 'new' command");
-        println!("\n{}", USAGE);
+        //println!("\n{}", USAGE);
+         run_help(terminal);
         Ok(())
     } else {
         run_csv_editor(terminal, args[2].clone());
