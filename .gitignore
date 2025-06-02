@@ -1,2 +1,4 @@
 /target
 installer_sxsv.sh
+/extra
+.DS_Store
