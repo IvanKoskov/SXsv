@@ -9,7 +9,6 @@ Steps for CSV Editor
 
 Use the template below and draw stuff using it::
 
-<code>
 
     pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) {
         loop {
@@ -33,7 +32,7 @@ Use the template below and draw stuff using it::
         }
     }
 
-   </code>
+
 
 IMPORTANT!
 ==========
