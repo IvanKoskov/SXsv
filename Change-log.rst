@@ -10,3 +10,4 @@
 - Info menu is considered finished
 - Help menu is considered finished
 - Switched to .rst format for documentation, todos, readme and etc
+- Cleaned junk from the project files, removed system files
