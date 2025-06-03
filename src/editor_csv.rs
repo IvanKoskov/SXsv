@@ -5,6 +5,8 @@ use ratatui::{
     layout::{Constraint, Direction, Layout, Rect}, style::{Style, Stylize}, text::Text, widgets::{Block, Borders, List, ListState, Paragraph, Row, Table, TableState}, DefaultTerminal, Frame
 };
 
+use crate::read_file::file_read_csv;
+
 pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Result<()> {
     let mut list_action_option = ListState::default();
     let mut popover = false;
@@ -45,12 +47,15 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
             frame.render_stateful_widget(action_list, layout[1], &mut list_action_option);
 
 
-
-let rows = [
+/* 
+let rows = vec![
     Row::new(vec!["Row11", "Row12", "Row13"]),
     Row::new(vec!["Row21", "Row22", "Row23"]),
     Row::new(vec!["Row31", "Row32", "Row33"]),
 ];
+*/
+
+let rows: Vec<Row<'static>> = file_read_csv(&filename);
 
             // Columns widths are constrained in the same way as Layout...
 let widths = [
