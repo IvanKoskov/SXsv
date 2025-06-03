@@ -18,11 +18,14 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
 
     let mut rows_len = file_read_lines(&filename);
 
+    let mut editor_size: u16 = 70;
+    let mut action_panel_size: u16 = 30;
+
     loop {
         let _ = terminal.draw(|frame: &mut Frame| {
             let layout = Layout::default()
                 .direction(Direction::Horizontal)
-                .constraints(vec![Constraint::Percentage(70), Constraint::Percentage(30)])
+                .constraints(vec![Constraint::Percentage(editor_size), Constraint::Percentage(action_panel_size)])
                 .split(frame.area());
 
             let editor_inner_tab = Layout::default()
@@ -176,6 +179,38 @@ let table = Table::new(rows, widths)
                         None => 0,
                     };
                     table_action_scroll.select(Some(i));
+                }
+
+                 KeyCode::Left  => {
+                  if action_panel_size == 0 || editor_size == 0 {
+                  
+                  action_panel_size = 30;
+                  editor_size = 70;
+
+                  } 
+                  else {
+
+                    editor_size = editor_size + 1;
+                    action_panel_size = action_panel_size - 1;
+
+                  }
+                
+                }
+
+                KeyCode::Right  => {
+                  if action_panel_size == 0 || editor_size == 0 {
+                  
+                  action_panel_size = 30;
+                  editor_size = 70;
+
+                  } 
+                  else {
+
+                    editor_size = editor_size - 1;
+                    action_panel_size = action_panel_size + 1;
+
+                  }
+                
                 }
 
                 KeyCode::Char('m') => {
