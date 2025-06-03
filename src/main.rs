@@ -4,14 +4,18 @@ mod entry;
 mod file;
 mod info_menu;
 mod messages;
+mod read_file;
 mod time;
-use crate::entry::arguments_sxsv;
+use std::env;
+
+use crate::{entry::arguments_sxsv, read_file::file_read_lines};
 use OS::sxsv_setup;
 use color_eyre::{Result, eyre::Ok};
 use time::sxsv_time;
 
 fn main() -> Result<()> {
-    sxsv_time();
+
+     sxsv_time();
 
     sxsv_setup();
 
@@ -24,4 +28,6 @@ fn main() -> Result<()> {
     ratatui::restore();
 
     result // Propagate any error from arguments_sxsv
+
+
 }

@@ -111,7 +111,7 @@ let table = Table::new(rows, widths)
                 KeyCode::Down  => {
                     let i = match list_action_option.selected() {
                         Some(i) => {
-                            if i >= 2 {
+                            if i >= 3 - 1 {
                                 0
                             } else {
                                 i + 1
@@ -125,7 +125,7 @@ let table = Table::new(rows, widths)
                     let i = match list_action_option.selected() {
                         Some(i) => {
                             if i == 0 {
-                                2
+                                3
                             } else {
                                 i - 1
                             }
@@ -134,6 +134,35 @@ let table = Table::new(rows, widths)
                     };
                     list_action_option.select(Some(i));
                 }
+
+                 KeyCode::Char('h')  => {
+                    let i = match table_action_scroll.selected() {
+                        Some(i) => {
+                            if i == 0 {
+                                2
+                            } else {
+                                i - 1
+                            }
+                        }
+                        None => 0,
+                    };
+                    table_action_scroll.select(Some(i));
+                }
+
+                 KeyCode::Char('l')  => {
+                    let i = match table_action_scroll.selected() {
+                        Some(i) => {
+                            if i >= 2 {
+                                0
+                            } else {
+                                i + 1
+                            }
+                        }
+                        None => 0,
+                    };
+                    table_action_scroll.select(Some(i));
+                }
+
                 KeyCode::Char('m') => {
                     popover = !popover; // Toggle popover
                 }
