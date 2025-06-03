@@ -2,11 +2,7 @@ use color_eyre::eyre;
 use crossterm::event::{self, Event, KeyCode};
 use eyre::Result;
 use ratatui::{
-    DefaultTerminal, Frame,
-    layout::{Constraint, Direction, Layout, Rect},
-    style::{Style, Stylize},
-    text::Text,
-    widgets::{Block, Borders, List, ListState, Paragraph},
+    layout::{Constraint, Direction, Layout, Rect}, style::{Style, Stylize}, text::Text, widgets::{Block, Borders, List, ListState, Paragraph, Row, Table}, DefaultTerminal, Frame
 };
 
 pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Result<()> {
@@ -38,10 +34,49 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
                 .style(Style::new().white().on_black()); // Optional: style for visibility
 
             // Render the main paragraph in layout[0]
-            frame.render_widget(paragraph, layout[0]);
+          //  frame.render_widget(paragraph, layout[0]);
 
             // Render the action list in layout[1]
             frame.render_stateful_widget(action_list, layout[1], &mut list_action_option);
+
+
+
+let rows = [
+    Row::new(vec!["Row11", "Row12", "Row13"]),
+    Row::new(vec!["Row21", "Row22", "Row23"]),
+    Row::new(vec!["Row31", "Row32", "Row33"]),
+];
+
+            // Columns widths are constrained in the same way as Layout...
+let widths = [
+    Constraint::Length(20),
+    Constraint::Length(20),
+    Constraint::Length(20),
+];
+let table = Table::new(rows, widths)
+    // ...and they can be separated by a fixed spacing.
+    .column_spacing(1)
+    // You can set the style of the entire Table.
+    .style(Style::new().blue())
+    // It has an optional header, which is simply a Row always visible at the top.
+    .header(
+        Row::new(vec!["Col1", "Col2", "Col3"])
+            .style(Style::new().bold())
+            // To add space between the header and the rest of the rows, specify the margin
+            .bottom_margin(1),
+    )
+    // It has an optional footer, which is simply a Row always visible at the bottom.
+    .footer(Row::new(vec!["Updated on Dec 28"]))
+    // As any other widget, a Table can be wrapped in a Block.
+    .block(Block::new().title("Table"))
+    // The selected row, column, cell and its content can also be styled.
+    .row_highlight_style(Style::new().reversed())
+    .column_highlight_style(Style::new().red())
+    .cell_highlight_style(Style::new().blue())
+    // ...and potentially show a symbol in front of the selection.
+    .highlight_symbol(">>");
+
+             frame.render_widget(table, layout[0]);
 
             // Render the popover if active
             /*   if popover {
