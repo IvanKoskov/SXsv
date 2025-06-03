@@ -2,12 +2,17 @@ use color_eyre::eyre;
 use crossterm::event::{self, Event, KeyCode};
 use eyre::Result;
 use ratatui::{
-    layout::{Constraint, Direction, Layout, Rect}, style::{Style, Stylize}, text::Text, widgets::{Block, Borders, List, ListState, Paragraph, Row, Table}, DefaultTerminal, Frame
+    layout::{Constraint, Direction, Layout, Rect}, style::{Style, Stylize}, text::Text, widgets::{Block, Borders, List, ListState, Paragraph, Row, Table, TableState}, DefaultTerminal, Frame
 };
 
 pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Result<()> {
     let mut list_action_option = ListState::default();
     let mut popover = false;
+
+    let mut table_action_scroll = TableState::default();
+
+    // filename for use in the closure
+    let filename_ref = &filename;
 
     loop {
         let _ = terminal.draw(|frame: &mut Frame| {
@@ -65,10 +70,9 @@ let table = Table::new(rows, widths)
             // To add space between the header and the rest of the rows, specify the margin
             .bottom_margin(1),
     )
-    // It has an optional footer, which is simply a Row always visible at the bottom.
-    .footer(Row::new(vec!["Updated on Dec 28"]))
-    // As any other widget, a Table can be wrapped in a Block.
-    .block(Block::new().title("Table"))
+    .block(Block::bordered().title(filename.as_str()))
+    // The selected row, column, cell and its content can also be styled.
+    .row_highlight_style(Style::new().reversed())
     // The selected row, column, cell and its content can also be styled.
     .row_highlight_style(Style::new().reversed())
     .column_highlight_style(Style::new().red())
@@ -76,7 +80,7 @@ let table = Table::new(rows, widths)
     // ...and potentially show a symbol in front of the selection.
     .highlight_symbol(">>");
 
-             frame.render_widget(table, layout[0]);
+             frame.render_stateful_widget(table, layout[0], &mut table_action_scroll);
 
             // Render the popover if active
             /*   if popover {
@@ -104,7 +108,7 @@ let table = Table::new(rows, widths)
         if let Event::Key(key) = event::read()? {
             match key.code {
                 KeyCode::Esc | KeyCode::Char('q') => break,
-                KeyCode::Down | KeyCode::Char('l') => {
+                KeyCode::Down  => {
                     let i = match list_action_option.selected() {
                         Some(i) => {
                             if i >= 2 {
@@ -117,7 +121,7 @@ let table = Table::new(rows, widths)
                     };
                     list_action_option.select(Some(i));
                 }
-                KeyCode::Up | KeyCode::Char('h') => {
+                KeyCode::Up  => {
                     let i = match list_action_option.selected() {
                         Some(i) => {
                             if i == 0 {
