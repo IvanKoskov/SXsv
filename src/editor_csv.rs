@@ -2,7 +2,7 @@ use color_eyre::eyre;
 use crossterm::event::{self, Event, KeyCode};
 use eyre::Result;
 use ratatui::{
-    layout::{Constraint, Direction, Layout, Rect}, style::{Style, Stylize}, text::Text, widgets::{Block, Borders, List, ListState, Paragraph, Row, Table, TableState}, DefaultTerminal, Frame
+    layout::{Constraint, Direction, Layout, Rect}, style::{Style, Stylize}, symbols::line::VERTICAL, text::Text, widgets::{Block, Borders, List, ListState, Paragraph, Row, Table, TableState, Wrap}, DefaultTerminal, Frame
 };
 
 use crate::read_file::{self, file_read_csv, file_read_lines};
@@ -25,6 +25,14 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
                 .constraints(vec![Constraint::Percentage(70), Constraint::Percentage(30)])
                 .split(frame.area());
 
+            let editor_inner_tab = Layout::default()
+            .direction(Direction::Vertical)
+            .constraints(vec![Constraint::Percentage(85), Constraint::Percentage(15)])
+            .split(layout[0]);
+
+            let par_help_editor = Paragraph::new("H - scroll editor up, L - scroll down, Actions - arrows").wrap(Wrap { trim: true }).block(Block::bordered().title("Navigation").red());
+
+            frame.render_widget(par_help_editor, editor_inner_tab[1]);
             let action_list = List::new([
                 Text::styled("Sort", Style::new().red()),
                 Text::styled("Search", Style::new().red()),
@@ -35,7 +43,7 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
             .highlight_symbol(">>");
 
             // Define the main paragraph
-            let paragraph = Paragraph::new(Text::raw("Hello, world!"));
+            //let paragraph = Paragraph::new(Text::raw("Hello, world!"));
 
             // Define the popover paragraph
             let parpopover = Paragraph::new(Text::raw("Current mode is CSV"))
@@ -87,7 +95,7 @@ let table = Table::new(rows, widths)
     // ...and potentially show a symbol in front of the selection.
     .highlight_symbol(">>");
 
-             frame.render_stateful_widget(table, layout[0], &mut table_action_scroll);
+             frame.render_stateful_widget(table, editor_inner_tab[0], &mut table_action_scroll);
 
             // Render the popover if active
             /*   if popover {
