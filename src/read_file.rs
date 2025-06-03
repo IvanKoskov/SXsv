@@ -1,5 +1,5 @@
 use std::{fs::File, io::{BufRead, BufReader, Error, Read}};
-use csv::ReaderBuilder;
+use csv::{ReaderBuilder, WriterBuilder};
 use ratatui::widgets::Row;
 
 pub fn file_read_lines(name: &String) -> usize {
@@ -38,3 +38,5 @@ pub fn file_read_csv(name: &str) -> Vec<Row<'static>> {
 
     rows
 }
+
+

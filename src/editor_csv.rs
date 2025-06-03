@@ -5,7 +5,7 @@ use ratatui::{
     layout::{Constraint, Direction, Layout, Rect}, style::{Style, Stylize}, text::Text, widgets::{Block, Borders, List, ListState, Paragraph, Row, Table, TableState}, DefaultTerminal, Frame
 };
 
-use crate::read_file::file_read_csv;
+use crate::read_file::{self, file_read_csv, file_read_lines};
 
 pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Result<()> {
     let mut list_action_option = ListState::default();
@@ -15,6 +15,8 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
 
     // filename for use in the closure
     let filename_ref = &filename;
+
+    let mut rows_len = file_read_lines(&filename);
 
     loop {
         let _ = terminal.draw(|frame: &mut Frame| {
@@ -144,7 +146,7 @@ let table = Table::new(rows, widths)
                     let i = match table_action_scroll.selected() {
                         Some(i) => {
                             if i == 0 {
-                                2
+                                rows_len
                             } else {
                                 i - 1
                             }
@@ -157,7 +159,7 @@ let table = Table::new(rows, widths)
                  KeyCode::Char('l')  => {
                     let i = match table_action_scroll.selected() {
                         Some(i) => {
-                            if i >= 2 {
+                            if i >= rows_len - 1 {
                                 0
                             } else {
                                 i + 1
