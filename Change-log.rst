@@ -12,3 +12,6 @@
 - Switched to .rst format for documentation, todos, readme and etc
 - Cleaned junk from the project files, removed system files
 - Started with the CSV editor module
+- Added window panels resizing
+- Better TUI
+- Added navigation hints
