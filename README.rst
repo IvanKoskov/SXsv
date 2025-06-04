@@ -13,3 +13,8 @@ refreshed dynamically so it is easy to use it from
 GUI or straight from terminal with Tmux for example.
 
 .. image:: previews/Screenshot3.png
+
+With an table widget navigate with highlighter 
+and other useful features
+
+.. image:: previews/Screenshot2.png
