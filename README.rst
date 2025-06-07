@@ -1,5 +1,5 @@
-SXsv - quick data formats viewer and editor 
-==========================================
+SXsv - quick data formats viewer
+===============================
 
 Simple TUI interface can be easily accessed
 from any platform and provide very clear 
