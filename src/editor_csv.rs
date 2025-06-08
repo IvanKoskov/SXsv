@@ -1,13 +1,14 @@
-use color_eyre::eyre;
-use crossterm::event::{self, Event, KeyCode};
+use color_eyre::{eyre, owo_colors::{colors::css::Red, OwoColorize}};
+use crossterm::{event::{self, Event, KeyCode}, style::Color};
 use eyre::Result;
 use ratatui::{
     layout::{Constraint, Direction, Layout, Rect}, style::{Style, Stylize}, symbols::line::VERTICAL, text::Text, widgets::{Block, Borders, List, ListState, Paragraph, Row, Table, TableState, Wrap}, DefaultTerminal, Frame
 };
 
-use crate::read_file::{self, file_read_csv, file_read_lines};
+use crate::read_file::{self, file_read_csv, file_read_first_line, file_read_lines};
 
 pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Result<()> {
+    let mut highlight_col: Color = Color::DarkRed;
     let mut list_action_option = ListState::default();
     let mut popover = false;
 
@@ -60,8 +61,8 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
             frame.render_stateful_widget(action_list, layout[1], &mut list_action_option);
 
 
-/* 
-let rows = vec![
+
+/*let rows = vec![
     Row::new(vec!["Row11", "Row12", "Row13"]),
     Row::new(vec!["Row21", "Row22", "Row23"]),
     Row::new(vec!["Row31", "Row32", "Row33"]),
@@ -76,6 +77,9 @@ let widths = [
     Constraint::Length(20),
     Constraint::Length(20),
 ];
+
+
+
 let table = Table::new(rows, widths)
     // ...and they can be separated by a fixed spacing.
     .column_spacing(1)
@@ -83,18 +87,18 @@ let table = Table::new(rows, widths)
     .style(Style::new().blue())
     // It has an optional header, which is simply a Row always visible at the top.
     .header(
-        Row::new(vec!["Col1", "Col2", "Col3"])
+        Row::new(file_read_first_line(&filename))
             .style(Style::new().bold())
             // To add space between the header and the rest of the rows, specify the margin
             .bottom_margin(1),
     )
     .block(Block::bordered().title(filename.as_str()))
     // The selected row, column, cell and its content can also be styled.
-    .row_highlight_style(Style::new().reversed())
+    .row_highlight_style(Style::new().red())
     // The selected row, column, cell and its content can also be styled.
-    .row_highlight_style(Style::new().reversed())
+    .row_highlight_style(Style::new().red().reversed())  //actual row col
     .column_highlight_style(Style::new().red())
-    .cell_highlight_style(Style::new().blue())
+    .cell_highlight_style(Style::new().red())
     // ...and potentially show a symbol in front of the selection.
     .highlight_symbol(">>");
 
@@ -181,7 +185,7 @@ let table = Table::new(rows, widths)
                     table_action_scroll.select(Some(i));
                 }
 
-                 KeyCode::Left  => {
+                 KeyCode::Right  => {
                   if action_panel_size == 0 || editor_size == 0 {
                   
                   action_panel_size = 30;
@@ -197,7 +201,7 @@ let table = Table::new(rows, widths)
                 
                 }
 
-                KeyCode::Right  => {
+                KeyCode::Left  => {
                   if action_panel_size == 0 || editor_size == 0 {
                   
                   action_panel_size = 30;

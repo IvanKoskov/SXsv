@@ -1,6 +1,6 @@
-use std::{fs::File, io::{BufRead, BufReader, Error, Read}};
-use csv::{ReaderBuilder, WriterBuilder};
-use ratatui::widgets::Row;
+use std::{fs::{read_to_string, File}, io::{BufRead, BufReader, Error, Read}};
+use csv::{Reader, ReaderBuilder, WriterBuilder};
+use ratatui::{layout::Rows, widgets::Row};
 
 pub fn file_read_lines(name: &String) -> usize {
   
@@ -37,6 +37,19 @@ pub fn file_read_csv(name: &str) -> Vec<Row<'static>> {
     }
 
     rows
+}
+
+pub fn file_read_first_line(name: &str) -> Vec<String> {
+  let mut rdr = csv::ReaderBuilder::new()
+    .delimiter(b';')  // Use semicolon instead of comma
+    .from_path(name)
+    .expect("Failed to open CSV file");
+
+  let record = rdr.headers().expect("Failed to read headers");
+  let vector: Vec<String> = record.iter().map(|s| s.to_string()).collect();
+  //println!("{:?}", vector);
+
+  vector
 }
 
 
