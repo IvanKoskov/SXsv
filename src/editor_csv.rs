@@ -69,7 +69,7 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
 ];
 */
 
-let rows: Vec<Row<'static>> = file_read_csv(&filename);
+let rows = file_read_csv(&filename);
 
             // Columns widths are constrained in the same way as Layout...
 let widths = [

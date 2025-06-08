@@ -16,7 +16,8 @@ pub fn file_read_lines(name: &String) -> usize {
 
 
 
-// Store the file contents in a struct to manage lifetime
+// no longer use this dumb ass code
+/* 
 pub fn file_read_csv(name: &str) -> Vec<Row<'static>> {
     let mut file = File::open(name).expect("Failed to open file");
     let mut file_contents = String::new();
@@ -38,6 +39,8 @@ pub fn file_read_csv(name: &str) -> Vec<Row<'static>> {
 
     rows
 }
+*/
+
 
 pub fn file_read_first_line(name: &str) -> Vec<String> {
   let mut rdr = csv::ReaderBuilder::new()
@@ -53,3 +56,16 @@ pub fn file_read_first_line(name: &str) -> Vec<String> {
 }
 
 
+pub fn file_read_csv(name: &str) -> Vec<Row<'_>> {
+
+    let mut rdr = csv::ReaderBuilder::new().delimiter(b';').from_path(name).expect("Failed to open csv");
+    let record = rdr.records();
+    let mut vector:  Vec<Row<'_>> = Vec::new();
+    for line in record {
+        let record = line.expect("Failed to read CSV record");
+        let row = Row::new(record.iter().map(|s| s.to_string()).collect::<Vec<String>>());
+        vector.push(row);
+    }
+
+    return vector;
+}
