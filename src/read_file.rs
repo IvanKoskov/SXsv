@@ -1,6 +1,6 @@
 use std::{fs::{read_to_string, File}, io::{BufRead, BufReader, Error, Read}};
 use csv::{Reader, ReaderBuilder, WriterBuilder};
-use ratatui::{layout::Rows, widgets::Row};
+use ratatui::{layout::Rows, style::{Style, Stylize}, widgets::Row};
 
 pub fn file_read_lines(name: &String) -> usize {
   
@@ -10,7 +10,7 @@ pub fn file_read_lines(name: &String) -> usize {
 
   //println!("{}", line_count);
   
-  line_count
+  line_count - 1 // Only records and not headers
 
 }
 
@@ -64,8 +64,9 @@ pub fn file_read_csv(name: &str) -> Vec<Row<'_>> {
     for line in record {
         let record = line.expect("Failed to read CSV record");
         let row = Row::new(record.iter().map(|s| s.to_string()).collect::<Vec<String>>());
-        vector.push(row);
+        let styled_row = row.style(Style::new().blue().italic().bold());
+        vector.push(styled_row);
     }
-
+      
     return vector;
 }

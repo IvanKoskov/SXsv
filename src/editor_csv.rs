@@ -1,3 +1,5 @@
+use std::ops::Add;
+
 use color_eyre::{eyre, owo_colors::{colors::css::Red, OwoColorize}};
 use crossterm::{event::{self, Event, KeyCode}, style::Color};
 use eyre::Result;
@@ -8,12 +10,14 @@ use ratatui::{
 use crate::read_file::{self, file_read_csv, file_read_first_line, file_read_lines};
 
 pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Result<()> {
+    let mut number_of_lines = String::from("CSV table has ") + &file_read_lines(&filename).to_string() + " records";
+    
     let mut highlight_col: Color = Color::DarkRed;
     let mut list_action_option = ListState::default();
     let mut popover = false;
 
     let mut table_action_scroll = TableState::default();
-
+    
     // filename for use in the closure
     let filename_ref = &filename;
 
@@ -46,16 +50,12 @@ pub fn run_csv_editor(terminal: &mut DefaultTerminal, filename: String) -> Resul
             .highlight_style(Style::new().italic())
             .highlight_symbol(">>");
 
-            // Define the main paragraph
-            //let paragraph = Paragraph::new(Text::raw("Hello, world!"));
-
-            // Define the popover paragraph
-            let parpopover = Paragraph::new(Text::raw("Current mode is CSV"))
+          
+            let parpopover = Paragraph::new(Text::raw(&number_of_lines))
                 .block(Block::bordered().title("Warning"))
                 .style(Style::new().white().on_black()); // Optional: style for visibility
 
-            // Render the main paragraph in layout[0]
-          //  frame.render_widget(paragraph, layout[0]);
+           
 
             // Render the action list in layout[1]
             frame.render_stateful_widget(action_list, layout[1], &mut list_action_option);
