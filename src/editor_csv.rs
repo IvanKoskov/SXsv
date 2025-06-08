@@ -220,6 +220,25 @@ let table = Table::new(rows, widths)
                 KeyCode::Char('m') => {
                     popover = !popover; // Toggle popover
                 }
+
+                KeyCode::Enter => {
+
+
+
+                }
+
+                 KeyCode::Char('j') => {
+
+                     table_action_scroll.scroll_left_by(1);
+
+                }
+
+                KeyCode::Char('k') => {
+
+                    table_action_scroll.scroll_right_by(1);
+
+                }
+
                 _ => {}
             }
         }
